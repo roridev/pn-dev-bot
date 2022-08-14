@@ -1,27 +1,33 @@
 use octocrab::models::issues::Issue;
 use octocrab::models::Label;
 
-pub fn format_it(issue: &Issue) -> String {
-    let size: Vec<&Label> = issue
-        .labels
-        .iter()
-        .filter(|it| it.name.contains("size/"))
-        .collect();
 pub trait Formattable {
     fn format_it(&self) -> String;
 }
 
-    let base = format!(
-        "**#{}** - [{}]({})",
-        issue.number,
-        issue.title,
-        issue.html_url.to_string()
-    );
+impl Formattable for Issue {
+    fn format_it(&self) -> String {
+        let size: Vec<&Label> = self
+            .labels
+            .iter()
+            .filter(|it| it.name.contains("size/"))
+            .collect();
 
-    if !size.is_empty() {
-        format!(" {} ➠ `{}`", base, size.first().unwrap().name)
-    } else {
-        base
+        let base = format!(
+            "**#{}** - [{}]({})",
+            self.number,
+            self.title,
+            self.html_url.to_string()
+        );
+
+        if !size.is_empty() {
+            format!(" {} ➠ `{}`", base, size.first().unwrap().name)
+        } else {
+            base
+        }
+    }
+}
+
 pub mod emoji {
     use std::fmt::Display;
 

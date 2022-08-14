@@ -1,4 +1,4 @@
-use crate::{Context, Error};
+use crate::{Context, Error, utils::Formattable};
 use octocrab::models::issues::Issue;
 
 #[derive(Debug, Copy, Clone)]
@@ -36,7 +36,7 @@ pub async fn confirmed(
     activity: Option<bool>,
 ) -> Result<(), Error> {
     let bugs = get_bugs(BugStatus::Confirmed, activity.unwrap_or(true)).await?;
-    let text: Vec<String> = bugs.iter().map(|x| crate::utils::format_it(x)).collect();
+    let text: Vec<String> = bugs.iter().map(|x| x.format_it()).collect();
 
     context
         .send(|response| {
@@ -59,7 +59,7 @@ pub async fn unconfirmed(
     activity: Option<bool>,
 ) -> Result<(), Error> {
     let bugs = get_bugs(BugStatus::Unconfirmed, activity.unwrap_or(true)).await?;
-    let text: Vec<String> = bugs.iter().map(|x| crate::utils::format_it(x)).collect();
+    let text: Vec<String> = bugs.iter().map(|x| x.format_it()).collect();
 
     context
         .send(|response| {

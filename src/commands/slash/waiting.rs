@@ -1,7 +1,7 @@
 use octocrab::models::issues::Issue;
 use poise::serenity_prelude as serenity;
 
-use crate::{Context, Error};
+use crate::{Context, Error, utils::Formattable};
 
 #[derive(poise::ChoiceParameter, Copy, Clone, Debug)]
 pub enum WaitingTag {
@@ -82,7 +82,7 @@ async fn send_cool_embed(
     sort: bool,
 ) -> Result<(), Error> {
     let issues = search_github(tag, query, sort).await?;
-    let text: Vec<String> = issues.iter().map(|k| crate::utils::format_it(k)).collect();
+    let text: Vec<String> = issues.iter().map(|k| k.format_it()).collect();
     ctx.send(|reply| {
         reply.embed(|embed| {
             embed
