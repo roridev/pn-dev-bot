@@ -7,6 +7,9 @@ pub fn format_it(issue: &Issue) -> String {
         .iter()
         .filter(|it| it.name.contains("size/"))
         .collect();
+pub trait Formattable {
+    fn format_it(&self) -> String;
+}
 
     let base = format!(
         "**#{}** - [{}]({})",
