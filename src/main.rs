@@ -10,6 +10,10 @@ use poise::serenity_prelude as serenity;
 async fn main() -> Result<(), Error> {
     let config = config::read_from_file("./config.json")?;
 
+    let github_settings = octocrab::OctocrabBuilder::new();
+
+    let _ = octocrab::initialise(github_settings);
+
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
             commands: vec![],
