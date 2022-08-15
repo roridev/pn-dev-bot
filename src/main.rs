@@ -1,8 +1,10 @@
+pub mod commands;
 pub mod config;
 
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Config, Error>;
 
+use commands::prefix::register;
 use config::Config;
 use poise::serenity_prelude as serenity;
 
@@ -16,7 +18,7 @@ async fn main() -> Result<(), Error> {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![],
+            commands: vec![register::register()],
             ..Default::default()
         })
         .token(config.clone().tokens.discord_token)
