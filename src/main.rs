@@ -19,7 +19,7 @@ async fn main() -> Result<(), Error> {
             commands: vec![],
             ..Default::default()
         })
-        .token(config.tokens.discord_token)
+        .token(config.clone().tokens.discord_token)
         .intents(serenity::GatewayIntents::non_privileged())
         .user_data_setup(move |_ctx, _ready, _framework| Box::pin(async move { Ok(config) }));
 
