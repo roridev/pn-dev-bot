@@ -49,6 +49,51 @@ impl Format for Issue {
     }
 }
 
+impl Format for PullRequest {
+    fn fmt(&self) -> String {
+        let status = get_state(&self);
+        let locked = if self.locked {
+            format!("{}", emoji::Misc::Lock)
+        } else {
+            "".to_string()
+        };
+        let number = &self.number;
+
+        let filtered_labels: Vec<String> = self
+            .clone()
+            .labels
+            .unwrap_or(vec![])
+            .iter()
+            .filter(|it| {
+                it.name.contains("Resolution")
+                    || it.name.contains("size")
+                    || it.name.contains("Type")
+                    || it.name.contains("priority")
+            })
+            .map(|it| format!("`{}`", it.name))
+            .collect();
+
+        let base = format!(
+            "{} **#{}** {} {}",
+            status,
+            number,
+            self.clone().title.unwrap_or("Unknown Title".to_string()),
+            locked
+        );
+
+        if !filtered_labels.is_empty() {
+            return format!(
+                "{}\n{} {}",
+                base,
+                emoji::Misc::Tag,
+                filtered_labels.join(" ")
+            );
+        } else {
+            return base;
+        }
+    }
+}
+
 fn get_state(pr: &PullRequest) -> emoji::PullRequest {
     if pr.draft.unwrap_or(false) {
         emoji::PullRequest::Draft
