@@ -6,7 +6,7 @@ type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Config, Error>;
 
 use commands::prefix::register;
-use commands::slash::waiting;
+use commands::slash::{pr, waiting};
 use config::Config;
 use poise::serenity_prelude as serenity;
 
@@ -20,7 +20,7 @@ async fn main() -> Result<(), Error> {
 
     let framework = poise::Framework::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![register::register(), waiting::waiting()],
+            commands: vec![register::register(), waiting::waiting(), pr::pr()],
             ..Default::default()
         })
         .token(config.clone().tokens.discord_token)
