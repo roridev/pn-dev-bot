@@ -13,3 +13,10 @@ pub enum Query {
     Issue,
     All,
 }
+
+#[derive(poise::ChoiceParameter, Copy, Clone, Debug)]
+pub enum Sorting {
+    Created,
+    Updated,
+    Comments,
+}
