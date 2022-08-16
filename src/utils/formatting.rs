@@ -30,7 +30,15 @@ impl Format for Issue {
             .map(|it| format!("`{}`", it.name))
             .collect();
 
-        let base = format!("{} **#{}** {} {}", status, number, self.title, locked);
+        let base = format!(
+            "{} **#{}** [{}]({}) · {} {}",
+            status,
+            number,
+            emoji::Action::OpenLink,
+            self.html_url,
+            self.title,
+            locked
+        );
 
         if !filtered_issues.is_empty() {
             return format!(
