@@ -9,11 +9,7 @@ pub trait Format {
 
 impl Format for Issue {
     fn fmt(&self) -> String {
-        let status = if self.state == "closed" {
-            emoji::Issue::Closed
-        } else {
-            emoji::Issue::Open
-        };
+        let status = get_state_issue(self);
 
         let locked = if self.locked {
             emoji::Misc::Lock.to_string()
