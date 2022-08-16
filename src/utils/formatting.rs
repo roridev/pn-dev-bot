@@ -24,7 +24,7 @@ impl Format for Issue {
             .filter(|it| {
                 it.name.contains("Resolution")
                     || it.name.contains("size")
-                    || it.name.contains("Type")
+                    || it.name.starts_with("Type:")
                     || it.name.contains("priority")
             })
             .map(|it| format!("`{}`", it.name))
