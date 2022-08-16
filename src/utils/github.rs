@@ -8,3 +8,9 @@ impl Queryable for String {
         (*self).clone()
     }
 }
+
+impl Queryable for &str {
+    fn to_query(&self) -> String {
+        self.to_string()
+    }
+}
