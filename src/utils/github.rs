@@ -20,6 +20,7 @@ impl Queryable for &str {
 async fn get_issues_and_prs_with_labels<T: Queryable>(
     labels: Vec<T>,
     state: octocrab::params::State,
+    sort: octocrab::params::issues::Sort,
     page: u32,
 ) -> Result<Page<Issue>, octocrab::Error> {
     let inner: Vec<String> = labels.iter().map(|it| it.to_query()).collect();
@@ -27,6 +28,7 @@ async fn get_issues_and_prs_with_labels<T: Queryable>(
         .issues("PowerNukkit", "PowerNukkit")
         .list()
         .state(state)
+        .sort(sort)
         .labels(&inner)
         .page(page)
         .per_page(100)
