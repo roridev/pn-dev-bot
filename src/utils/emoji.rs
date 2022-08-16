@@ -10,7 +10,7 @@ pub enum PullRequest {
 impl Display for PullRequest {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let result = match self {
-            PullRequest::Open => "<:gh_pr_closed:1008308520669683732>",
+            PullRequest::Open => "<:gh_pr_open:1008308524780113930>",
             PullRequest::Closed => "<:gh_pr_closed:1008308520669683732>",
             PullRequest::Draft => "<:gh_pr_draft:1008308521814728756>",
             PullRequest::Merged => "<:gh_pr_merged:1008308523341451374>",
