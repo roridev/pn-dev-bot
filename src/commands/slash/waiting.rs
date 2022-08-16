@@ -6,3 +6,10 @@ pub enum WaitingTag {
     InGameTest,
     Response,
 }
+
+#[derive(poise::ChoiceParameter, Copy, Clone, Debug)]
+pub enum Query {
+    PullRequest,
+    Issue,
+    All,
+}
