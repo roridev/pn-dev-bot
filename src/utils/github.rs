@@ -17,7 +17,7 @@ impl Queryable for &str {
     }
 }
 
-async fn get_issues_and_prs_with_labels<T: Queryable>(
+pub async fn get_issues_and_prs_with_labels<T: Queryable>(
     labels: Vec<T>,
     state: octocrab::params::State,
     sort: octocrab::params::issues::Sort,
