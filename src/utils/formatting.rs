@@ -107,6 +107,10 @@ impl Format for PullRequest {
 }
 
 fn get_state(pr: &PullRequest) -> emoji::PullRequest {
+    if pr.merged_at.is_some() {
+        return emoji::PullRequest::Merged;
+    }
+
     if pr.draft.unwrap_or(false) {
         emoji::PullRequest::Draft
     } else {
