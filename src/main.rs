@@ -1,5 +1,6 @@
 pub mod commands;
 pub mod config;
+pub mod utils;
 
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Config, Error>;
