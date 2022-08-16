@@ -1,4 +1,5 @@
 use octocrab::models::issues::Issue;
+use octocrab::models::pulls::PullRequest;
 use octocrab::Page;
 
 pub trait Queryable {
@@ -33,5 +34,12 @@ pub async fn get_issues_and_prs_with_labels<T: Queryable>(
         .page(page)
         .per_page(100)
         .send()
+        .await
+}
+
+pub async fn get_pr(id: u64) -> Result<PullRequest, octocrab::Error> {
+    octocrab::instance()
+        .pulls("PowerNukkit", "PowerNukkit")
+        .get(id)
         .await
 }
