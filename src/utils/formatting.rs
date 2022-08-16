@@ -78,39 +78,22 @@ impl Format for PullRequest {
             "".to_string()
         };
         let number = &self.number;
-
-        let filtered_labels: Vec<String> = self
-            .clone()
-            .labels
-            .unwrap_or(vec![])
-            .iter()
-            .filter(|it| {
-                it.name.contains("Resolution")
-                    || it.name.contains("size")
-                    || it.name.contains("Type")
-                    || it.name.contains("priority")
-            })
-            .map(|it| format!("`{}`", it.name))
-            .collect();
+        let merge = self.mergeable.unwrap_or(true);
 
         let base = format!(
-            "{} **#{}** {} {}",
+            "{} {} **#{}** · {} {}",
+            if merge {
+                "".to_string()
+            } else {
+                emoji::Action::Error.to_string()
+            },
             status,
             number,
             self.clone().title.unwrap_or("Unknown Title".to_string()),
             locked
         );
 
-        if !filtered_labels.is_empty() {
-            return format!(
-                "{}\n{} {}",
-                base,
-                emoji::Misc::Tag,
-                filtered_labels.join(" ")
-            );
-        } else {
-            return base;
-        }
+        base
     }
 }
 
