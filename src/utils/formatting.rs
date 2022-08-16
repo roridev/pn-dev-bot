@@ -49,6 +49,22 @@ impl Format for Issue {
     }
 }
 
+fn get_state_issue(issue: &Issue) -> String {
+    if issue.pull_request.is_some() {
+        return if issue.state == "closed" {
+            emoji::PullRequest::Closed.to_string()
+        } else {
+            emoji::PullRequest::Open.to_string()
+        };
+    } else {
+        return if issue.state == "closed" {
+            emoji::Issue::Closed.to_string()
+        } else {
+            emoji::Issue::Open.to_string()
+        };
+    }
+}
+
 impl Format for PullRequest {
     fn fmt(&self) -> String {
         let status = get_state(&self);
