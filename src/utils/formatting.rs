@@ -1,4 +1,5 @@
 use octocrab::models::issues::Issue;
+use octocrab::models::pulls::PullRequest;
 
 use super::emoji;
 
@@ -44,6 +45,23 @@ impl Format for Issue {
             );
         } else {
             return base;
+        }
+    }
+}
+
+fn get_state(pr: &PullRequest) -> emoji::PullRequest {
+    if pr.draft.unwrap_or(false) {
+        emoji::PullRequest::Draft
+    } else {
+        if pr
+            .state
+            .clone()
+            .unwrap_or(octocrab::models::IssueState::Open)
+            == octocrab::models::IssueState::Open
+        {
+            emoji::PullRequest::Open
+        } else {
+            emoji::PullRequest::Closed
         }
     }
 }
