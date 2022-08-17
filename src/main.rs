@@ -6,7 +6,7 @@ type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Config, Error>;
 
 use commands::prefix::register;
-use commands::slash::{issue, pr, waiting};
+use commands::slash::{bug, issue, pr, waiting};
 use config::Config;
 use poise::serenity_prelude as serenity;
 
@@ -25,6 +25,7 @@ async fn main() -> Result<(), Error> {
                 waiting::waiting(),
                 pr::pr(),
                 issue::issue(),
+                bug::bug(),
             ],
             ..Default::default()
         })

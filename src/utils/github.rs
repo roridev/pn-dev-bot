@@ -80,10 +80,21 @@ pub fn get_priority(labels: &Vec<Label>) -> labels::Priority {
 pub mod labels {
     use std::cmp::Ordering;
 
+    use super::Queryable;
+
     #[derive(PartialEq, Eq)]
     pub enum Priority {
         Priority(i64),
         Unprioritized,
+    }
+
+    impl Queryable for Priority {
+        fn to_query(&self) -> String {
+            match self {
+                Priority::Priority(i) => format!("priority:{}", i),
+                Priority::Unprioritized => "".to_string(),
+            }
+        }
     }
 
     impl PartialOrd for Priority {
@@ -101,6 +112,21 @@ pub mod labels {
                         Priority::Unprioritized => Some(Ordering::Equal),
                     }
                 }
+            }
+        }
+    }
+
+    #[derive(PartialEq, Eq, poise::ChoiceParameter, Debug)]
+    pub enum ConfirmationStatus {
+        Unconfirmed,
+        Confirmed,
+    }
+
+    impl Queryable for ConfirmationStatus {
+        fn to_query(&self) -> String {
+            match self {
+                ConfirmationStatus::Unconfirmed => "Status: Unconfirmed".to_string(),
+                ConfirmationStatus::Confirmed => "Status: Confirmed".to_string(),
             }
         }
     }

@@ -38,7 +38,7 @@ pub enum Sorting {
 }
 
 impl Sorting {
-    fn to_param(&self) -> octocrab::params::issues::Sort {
+    pub fn to_param(&self) -> octocrab::params::issues::Sort {
         match self {
             Sorting::Created => octocrab::params::issues::Sort::Created,
             Sorting::Updated => octocrab::params::issues::Sort::Updated,
