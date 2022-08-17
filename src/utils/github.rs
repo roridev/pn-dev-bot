@@ -115,4 +115,10 @@ pub mod labels {
             }
         }
     }
+
+    #[derive(PartialEq, Eq)]
+    pub enum ConfirmationStatus {
+        Unconfirmed,
+        Confirmed,
+    }
 }
