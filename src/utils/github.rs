@@ -50,3 +50,7 @@ pub async fn get_issue(id: u64) -> Result<Issue, octocrab::Error> {
         .get(id)
         .await
 }
+
+pub fn is_pull_request(issue: &Issue) -> bool {
+    issue.pull_request.is_some()
+}
