@@ -56,4 +56,10 @@ pub fn is_pull_request(issue: &Issue) -> bool {
 }
 
 pub mod labels {
+
+    #[derive(PartialEq, Eq)]
+    pub enum Priority {
+        Priority(i64),
+        Unprioritized,
+    }
 }
