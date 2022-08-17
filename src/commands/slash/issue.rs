@@ -1,6 +1,7 @@
 use crate::utils::emoji;
 use crate::utils::formatting::get_state_issue;
 use crate::utils::github::get_issue;
+use crate::utils::vec::stringify_vec;
 use crate::{Context, Error};
 
 #[poise::command(slash_command)]
@@ -47,22 +48,10 @@ pub async fn issue(
                         .icon_url(user.avatar_url)
                         .text(format!("Author: {}", user.login))
                 })
-                .field(
-                    "Assignees",
-                    if assignees.is_empty() {
-                        "None.".to_string()
-                    } else {
-                        assignees.join(", ")
-                    },
-                    false,
-                )
+                .field("Assignees", stringify_vec(&assignees, "None.", ", "), false)
                 .field(
                     format!("{} Labels", emoji::Misc::Tag),
-                    if labels.is_empty() {
-                        "None".to_string()
-                    } else {
-                        labels.join(" ")
-                    },
+                    stringify_vec(&labels, "None.", " "),
                     false,
                 )
         })
