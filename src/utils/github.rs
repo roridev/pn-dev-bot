@@ -56,10 +56,30 @@ pub fn is_pull_request(issue: &Issue) -> bool {
 }
 
 pub mod labels {
+    use std::cmp::Ordering;
 
     #[derive(PartialEq, Eq)]
     pub enum Priority {
         Priority(i64),
         Unprioritized,
+    }
+
+    impl PartialOrd for Priority {
+        fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+            match self {
+                Priority::Priority(i) => {
+                    match other {
+                        Priority::Priority(j) => i.partial_cmp(j),
+                        Priority::Unprioritized => Some(Ordering::Greater),
+                    }
+                }
+                Priority::Unprioritized => {
+                    match other {
+                        Priority::Priority(i) => Some(Ordering::Less),
+                        Priority::Unprioritized => Some(Ordering::Equal),
+                    }
+                }
+            }
+        }
     }
 }
