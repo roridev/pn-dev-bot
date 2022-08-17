@@ -1,6 +1,7 @@
 use crate::utils::emoji;
 use crate::utils::formatting::Format;
 use crate::utils::github::get_pr;
+use crate::utils::vec::stringify_vec;
 use crate::{Context, Error};
 
 #[poise::command(slash_command)]
@@ -79,20 +80,12 @@ pub async fn pr(
                 })
                 .field(
                     format!("{} Labels", emoji::Misc::Tag),
-                    if labels.is_empty() {
-                        "None.".to_string()
-                    } else {
-                        labels.join(" ")
-                    },
+                    stringify_vec(&labels, "None.", " "),
                     false,
                 )
                 .field(
                     "Requested Reviewers",
-                    if requested_reviewers.is_empty() {
-                        "None.".to_string()
-                    } else {
-                        requested_reviewers.join(", ")
-                    },
+                    stringify_vec(&requested_reviewers, "None.", ", "),
                     false,
                 )
         })
