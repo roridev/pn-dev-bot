@@ -43,3 +43,10 @@ pub async fn get_pr(id: u64) -> Result<PullRequest, octocrab::Error> {
         .get(id)
         .await
 }
+
+pub async fn get_issue(id: u64) -> Result<Issue, octocrab::Error> {
+    octocrab::instance()
+        .issues("PowerNukkit", "PowerNukkit")
+        .get(id)
+        .await
+}
