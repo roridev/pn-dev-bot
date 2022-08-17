@@ -53,7 +53,7 @@ impl Format for Issue {
     }
 }
 
-fn get_state_issue(issue: &Issue) -> String {
+pub fn get_state_issue(issue: &Issue) -> String {
     if issue.pull_request.is_some() {
         return if issue.state == "closed" {
             emoji::PullRequest::Closed.to_string()
