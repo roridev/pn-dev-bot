@@ -116,7 +116,7 @@ pub mod labels {
         }
     }
 
-    #[derive(PartialEq, Eq)]
+    #[derive(PartialEq, Eq, poise::ChoiceParameter)]
     pub enum ConfirmationStatus {
         Unconfirmed,
         Confirmed,
