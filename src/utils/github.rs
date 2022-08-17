@@ -1,5 +1,6 @@
 use octocrab::models::issues::Issue;
 use octocrab::models::pulls::PullRequest;
+use octocrab::models::Label;
 use octocrab::Page;
 
 pub trait Queryable {
@@ -53,6 +54,27 @@ pub async fn get_issue(id: u64) -> Result<Issue, octocrab::Error> {
 
 pub fn is_pull_request(issue: &Issue) -> bool {
     issue.pull_request.is_some()
+}
+
+pub fn get_priority(labels: &Vec<Label>) -> labels::Priority {
+    if labels.is_empty() {
+        return labels::Priority::Unprioritized;
+    } else {
+        let filtered: Vec<&Label> = labels
+            .iter()
+            .filter(|it| it.name.contains("priority:"))
+            .collect();
+
+        if filtered.is_empty() {
+            return labels::Priority::Unprioritized;
+        } else {
+            let label = filtered.get(0).unwrap();
+            let num_chr = label.name.replace("priority:", "");
+            let num = i64::from_str_radix(num_chr.trim(), 10).unwrap();
+
+            return labels::Priority::Priority(num);
+        }
+    }
 }
 
 pub mod labels {
