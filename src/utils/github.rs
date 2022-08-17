@@ -121,4 +121,13 @@ pub mod labels {
         Unconfirmed,
         Confirmed,
     }
+
+    impl Queryable for ConfirmationStatus {
+        fn to_query(&self) -> String {
+            match self {
+                ConfirmationStatus::Unconfirmed => "Status: Unconfirmed".to_string(),
+                ConfirmationStatus::Confirmed => "Status: Confirmed".to_string(),
+            }
+        }
+    }
 }
